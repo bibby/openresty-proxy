@@ -1,0 +1,22 @@
+---
+
+openresty:
+  container_name: openresty
+  # build: ./
+  image: openresty
+  restart: unless-stopped
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - /opt/openresty/conf:/etc/nginx/conf.d
+    - /opt/openresty/certs:/etc/nginx/certs
+    - /opt/openresty/lua:/etc/nginx/lua
+  environment:
+    VAULT_ADDR: $VAULT_ADDR
+    VAULT_TOKEN: $VAULT_TOKEN
+    LOG_LEVEL: info
+    OPENRESTY_LOG_LEVEL: warn
+    CA_EXPIRE: 1858484815
+  ports:
+    - 80:80
+    - 443:443
+    - 44380:44380
